@@ -6,5 +6,25 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <Header />
-  <a class="text-5xl">概要</a>
+  <div
+    class="mx-auto grid min-h-[calc(100dvh_-_3.5rem)] max-w-4xl place-content-stretch place-items-center gap-4 p-4"
+  >
+    <div
+      class="flex flex-col place-items-center gap-8 p-4 lg:col-span-3 lg:flex-row"
+    >
+      <img
+        src="https://github.com/nakada-lab.png"
+        alt="icon"
+        class="h-64 w-64 rounded-full"
+      />
+      中田 尚
+      <br />
+      Takashi Nakada
+      <br />
+      大阪国際工科専門職大学 准教授
+      <br />
+      Associate Professor at IPUT Osaka
+      <br />
+    </div>
+  </div>
 </Layout>

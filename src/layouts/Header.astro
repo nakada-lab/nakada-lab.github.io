@@ -1,20 +1,22 @@
 ---
-
+import { Icon } from "astro-icon/components";
 ---
 
 <header class="sticky top-0 backdrop-blur-3xl">
   <div
-    class="mx-auto flex max-w-4xl place-content-stretch place-items-center gap-2 p-4"
+    class="res mx-auto flex h-14 max-w-4xl place-content-stretch place-items-center gap-4 font-bold"
   >
-    <img src="/icons/brain.svg" alt="a" class="h-6 w-6" />
-    AI Collaboration Lab / 人工知能コラボレーション研究室
+    <div class="sm:hidden">人工知能コラボレーション研究室</div>
+    <div class="hidden sm:block">
+      人工知能コラボレーション研究室 / AI Collaboration Lab
+    </div>
     <a
       href="https://github.com/nakada-lab"
       class="ml-auto"
       target="_blank"
-      rel="”noreferrer”"
+      rel="noreferrer"
     >
-      <img src="/icons/github.svg" alt="a" class="h-6 w-6" />
+      <Icon name="lucide:github" size={24} />
     </a>
   </div>
 </header>

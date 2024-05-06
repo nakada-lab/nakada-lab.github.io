@@ -13,3 +13,7 @@
   font-style: normal;
   font-display: swap;
 }
+
+.res {
+  @apply mx-auto w-full max-w-screen-lg px-8 max-[360px]:max-w-72 max-[360px]:px-0;
+}
