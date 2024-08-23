@@ -1,22 +1,14 @@
 ---
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import Header from "../layouts/Header.astro";
-import Layout from "../layouts/Layout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
+import Header from '../layouts/Header.astro'
+import Layout from '../layouts/Layout.astro'
 ---
 
-<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<Layout description={SITE_DESCRIPTION} title={SITE_TITLE}>
   <Header />
-  <div
-    class="mx-auto grid min-h-[calc(100dvh_-_3.5rem)] max-w-4xl place-content-stretch place-items-center gap-4 p-4"
-  >
-    <div
-      class="flex flex-col place-items-center gap-8 p-4 lg:col-span-3 lg:flex-row"
-    >
-      <img
-        src="https://github.com/nakada-lab.png"
-        alt="icon"
-        class="h-64 w-64 rounded-full"
-      />
+  <div class="mx-auto grid min-h-[calc(100dvh_-_3.5rem)] max-w-4xl place-content-stretch place-items-center gap-4 p-4">
+    <div class="flex flex-col place-items-center gap-8 p-4 lg:col-span-3 lg:flex-row">
+      <img alt="icon" class="h-64 w-64 rounded-full" src="https://github.com/nakada-lab.png" />
       中田 尚
       <br />
       Takashi Nakada
