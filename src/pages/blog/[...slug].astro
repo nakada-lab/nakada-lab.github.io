@@ -1,0 +1,90 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+
+import Layout from '@/components/Layout.astro'
+import '@/styles/global.css'
+import { getCollection } from 'astro:content'
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog')
+  return posts.map((post) => ({ params: { slug: post.slug }, props: post }))
+}) satisfies GetStaticPaths
+
+type Props = CollectionEntry<'blog'>
+
+const post = Astro.props
+const { Content, headings } = await post.render()
+const { author, date, tags, title } = post.data
+---
+
+<Layout title={title}>
+  <main
+    class="mx-auto grid min-h-[calc(100vh-3.5rem)] w-full max-w-screen-lg grid-rows-[1fr,auto] gap-4 px-4 md:grid-cols-[2fr,1fr] md:grid-rows-1 md:gap-8 md:px-8"
+  >
+    <article class="prose rounded bg-indigo-50 px-4 py-6">
+      <div class="mb-4 border-b pb-4">
+        <h1>{title}</h1>
+        <div class="grid grid-cols-[1fr,auto] grid-rows-[auto,1fr] gap-2">
+          <div class="flex items-center gap-2 justify-self-start md:order-2">
+            <img alt="a" class="m-0 rounded-full" height="24" src={`https://github.com/${author}.png`} width="24" />
+            <p class="m-0">{author}</p>
+          </div>
+          <div class="justify-self-end md:order-3">{date.toLocaleDateString('sv-SE')}</div>
+          <div class="col-span-2 flex flex-wrap items-start gap-2 md:order-1 md:col-span-1 md:row-span-2">
+            {
+              tags.map((v) => (
+                <a
+                  class="rounded-full bg-indigo-200 px-1 text-sm font-normal no-underline hover:bg-indigo-500 hover:text-white"
+                  href={`/tags/${v}`}
+                >
+                  {v}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      <Content />
+    </article>
+    <div class="prose sticky top-14 overflow-auto rounded bg-indigo-50 px-4 py-6 md:h-[calc(100dvh-3.5rem)]">
+      <h3>目次</h3>
+      <ul>
+        {
+          (() => {
+            const h3 = []
+            let h4 = []
+
+            for (const { depth, slug, text } of headings) {
+              const row = (
+                <li>
+                  <a class="no-underline" href={`#${slug}`}>
+                    {text}
+                  </a>
+                </li>
+              )
+
+              if (depth < 3) {
+                if (h4.length) {
+                  h3.push(<ul>{h4}</ul>)
+                  h4 = []
+                }
+
+                h3.push(row)
+              } else {
+                h4.push(row)
+              }
+            }
+
+            if (h4.length) {
+              h3.push(<ul>{h4}</ul>)
+              h4 = []
+            }
+
+            return h3
+          })()
+        }
+      </ul>
+    </div>
+  </main>
+</Layout>

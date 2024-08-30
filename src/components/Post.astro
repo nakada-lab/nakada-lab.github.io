@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import { getAuthorName } from '@/content/authors'
+
+type Props = {
+  post: CollectionEntry<'blog'>
+}
+
+const {
+  post: {
+    data: { author, date, tags, title },
+    slug,
+  },
+} = Astro.props
+---
+
+<div class="grid items-start gap-2 py-4 md:grid-cols-[1fr,auto] md:grid-rows-[auto,auto]">
+  <a class="order-1 col-span-2 text-lg font-semibold md:col-span-1" href={`/blog/${slug}`}>
+    {title}
+  </a>
+  <div class="order-3 grid justify-items-end gap-2 md:order-2 md:row-span-2 md:p-2">
+    <div class="flex items-center gap-2">
+      <img alt="a" class="rounded-full" height="20" src={`https://github.com/${author}.png`} width="20" />
+      <p class="text-sm">{getAuthorName(author)}</p>
+    </div>
+    <p class="text-sm">{date.toLocaleDateString('sv-SE')}</p>
+  </div>
+  <div class="order-2 grid gap-2 md:order-3">
+    <div class="md-4 flex flex-wrap gap-2">
+      {
+        tags.sort().map((v) => (
+          <a class="rounded-full bg-indigo-200 px-1 text-sm hover:bg-indigo-500 hover:text-white" href={`/tags/${v}`}>
+            {v}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>

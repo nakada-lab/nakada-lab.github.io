@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content'
+
+import Post from './Post.astro'
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 5)
+---
+
+<div class="rounded bg-indigo-50 px-4 py-6">
+  <div class="prose flex items-center gap-4 pb-4">
+    <h3 class="mb-0">最近の記事</h3>
+    <a href="/blog">すべての記事を見る</a>
+  </div>
+  <div class="grid items-center divide-y">
+    {posts.map((v) => <Post post={v} />)}
+  </div>
+</div>

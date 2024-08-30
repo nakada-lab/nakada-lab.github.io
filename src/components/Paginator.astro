@@ -1,0 +1,18 @@
+---
+import type { Page } from 'astro'
+
+type Props = {
+  page: Page
+}
+
+const { page } = Astro.props
+---
+
+<div class="prose grid h-7 grid-cols-2 justify-items-center gap-2">
+  <div>
+    {page.currentPage !== 1 && <a href={page.url.prev}>前のページ</a>}
+  </div>
+  <div>
+    {page.currentPage !== page.lastPage && <a href={page.url.next}>次のページ</a>}
+  </div>
+</div>

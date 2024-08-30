@@ -1,0 +1,36 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts'
+import { Icon } from 'astro-icon/components'
+
+import BaseHead from './BaseHead.astro'
+
+interface Props {
+  description?: string
+  image?: string
+  title?: string
+}
+
+const { description, image, title } = Astro.props
+---
+
+<html lang="ja">
+  <head>
+    <BaseHead
+      description={description ?? SITE_DESCRIPTION}
+      image={image ?? '/og.webp'}
+      title={title ? `${title} - ${SITE_TITLE}` : SITE_TITLE}
+    />
+  </head>
+  <body>
+    <header class="sticky top-0 z-10 grid h-14 place-items-center bg-white">
+      <a class="text-lg font-bold" href="/">Nakada Lab</a>
+    </header>
+    <slot />
+    <footer class="flex h-14 place-content-center place-items-center gap-4">
+      <p class="font-semibold">2024 &copy; Nakada Lab</p>
+      <a href="https://github.com/nakada-lab/nakada-lab.github.io" rel="noreferrer" target="_blank"
+        ><Icon name="lucide:github" size={20} /></a
+      >
+    </footer>
+  </body>
+</html>
