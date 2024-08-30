@@ -1,0 +1,57 @@
+---
+import type { GetStaticPaths } from 'astro'
+
+import Layout from '@/components/Layout.astro'
+import Paginator from '@/components/Paginator.astro'
+import Post from '@/components/Post.astro'
+import Tags from '@/components/Tags.astro'
+import { getAuthorName } from '@/content/authors'
+import { getCollection } from 'astro:content'
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const collection = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+
+  const dict = collection.reduce<Record<string, typeof collection>>((acc, post) => {
+    const { author } = post.data
+    if (!acc[author]) acc[author] = []
+    acc[author].push(post)
+    return acc
+  }, {})
+
+  return Object.entries(dict).flatMap(([user, posts]) => {
+    return paginate(posts, {
+      pageSize: 10,
+      params: { user },
+      props: { posts },
+    })
+  })
+}) satisfies GetStaticPaths
+
+const {
+  page: { data: posts },
+  page,
+} = Astro.props
+const { user } = Astro.params
+
+const name = getAuthorName(user)
+---
+
+<Layout title={`${name}の記事`}>
+  <main
+    class="mx-auto grid min-h-[calc(100vh-3.5rem)] w-full max-w-screen-lg grid-rows-[1fr,auto] gap-4 px-4 md:grid-cols-[2fr,1fr] md:grid-rows-1 md:gap-8 md:px-8"
+  >
+    <div class="rounded bg-indigo-50 px-4 py-6">
+      <div class="prose">
+        <h3>{name}の記事 {page.currentPage}</h3>
+        <Paginator page={page} />
+      </div>
+      <div class="my-4 grid items-center divide-y border-y">
+        {posts.map((v) => <Post post={v} />)}
+      </div>
+      <Paginator page={page} />
+    </div>
+    <div class="sticky top-14 rounded bg-indigo-50 px-4 py-6 md:h-[calc(100dvh-3.5rem)]">
+      <Tags />
+    </div>
+  </main>
+</Layout>

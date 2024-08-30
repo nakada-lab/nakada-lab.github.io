@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content'
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+
+const dict = posts.reduce<Record<string, number>>((acc, post) => {
+  for (const tag of post.data.tags) {
+    if (!acc[tag]) {
+      acc[tag] = 0
+    }
+    acc[tag]++
+  }
+
+  return acc
+}, {})
+
+const tags = Object.entries(dict)
+  .sort()
+  .sort((a, b) => b[1] - a[1])
+---
+
+<div class="prose pb-4">
+  <h3>Tags</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+  {
+    tags.map(([k, v]) => (
+      <a class="rounded-full bg-indigo-200 px-1 text-sm hover:bg-indigo-500 hover:text-white" href={`/tags/${k}`}>
+        {`${k} ${v}`}
+      </a>
+    ))
+  }
+</div>

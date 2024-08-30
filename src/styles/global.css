@@ -2,18 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* color-scheme: dark; */
-}
+@layer base {
+  a {
+    @apply transition;
+  }
 
-@font-face {
-  font-family: "hackgen";
-  src: url("/fonts/HackGen-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-.res {
-  @apply mx-auto w-full max-w-screen-lg px-8 max-[360px]:max-w-72 max-[360px]:px-0;
+  a:hover {
+    @apply text-indigo-500;
+  }
 }
