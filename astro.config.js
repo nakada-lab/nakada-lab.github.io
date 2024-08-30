@@ -10,7 +10,7 @@ const site = 'https://nakada-lab.github.io'
 
 /** @type {(page: string) => boolean} */
 function filter(page) {
-  return !ignorePaths.includes(page.replace(site, ''))
+  return ignorePaths.includes(page.replace(site, ''))
 }
 
 // https://astro.build/config
