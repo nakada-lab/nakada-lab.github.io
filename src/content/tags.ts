@@ -9,6 +9,9 @@ export const tags = {
   python: 'Python',
   react: 'React',
   typescript: 'TypeScript',
+  announcement: 'Announcement',
+  achievement: 'Achievement',
+  research: 'Research'
 } satisfies { [key: string]: string }
 
 export function getTagName(key: string) {
